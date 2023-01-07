@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #app {
+        border: 1px solid red;
+        position: relative;
+      }
+      #app .left {
+        border: 1px solid blue;
+      }
+      #app .wrapper {
+        border: 1px solid palevioletred;
+        position: absolute;
+        z-index: -1;
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="wrapper"></div>
+      <div class="left">
+        11
+      </div>
+    </div>
+    <script>
+      // 有一个span, input，里面数据同步
+      var data = {
+        text: '33'
+      }
+
+      var input = document.getElementsByTagName('input')[0]
+      var span = document.getElementsByTagName('span')[0]
+      span.innerHTML = data.text
+      const handler = {
+  set(target, key, value) {
+    Reflect.set(target, key, value)
+    // 数据变化 --> 修改视图
+    input.value = value;
+    span.innerHTML = value;
+  }
+};
+const proxy = new Proxy(data, handler);
+
+      input.addEventListener('keyup', (e) => {
+        proxy.text = e.target.value
+      })
+    </script>
+  </body>
+</html>
