@@ -37,8 +37,10 @@ function transfer(str) {
   // return arr.map(item => {
   //   return item[0].toUpperCase() + item.slice(1)
   // }).join('')
-  return str.replace(/(_\w)/g, (v) => {
-    return v.substring(1).toUpperCase()
+  return str.replace(/^(\w)|_(\w)/g, (match,p1, p2, ...rest) => {
+    console.log(match, p1, p2, rest)
+    if (p1) return p1.toUpperCase()
+    if (p2) return p2.toUpperCase()
   })
 }
 console.log(transfer('abc_def'))
@@ -77,6 +79,6 @@ function flat(arr) {
   }, [])
 }
 
-console.log(flat([1,2,3,[1,2,[1,2]]]))
+// console.log(flat([1,2,3,[1,2,[1,2]]]))
 
 
